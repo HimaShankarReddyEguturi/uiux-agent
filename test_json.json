@@ -1,0 +1,56 @@
+{
+  "project_name": "Test E-commerce App",
+  "summary": "Modern mobile-first design with gradient components",
+  "screens": [
+    {
+      "name": "Home Screen",
+      "layout": {
+        "sections": [
+          {
+            "component": "gradient_banner",
+            "gradient": "linear #FF6B6B → #4ECDC4",
+            "height": 280,
+            "title_style": "Poppins 800 42px white",
+            "padding": 40
+          },
+          {
+            "component": "filter_chips",
+            "chip_style": {
+              "background": "rgba(255,255,255,0.15)",
+              "border_radius": 25,
+              "box_shadow": "0 4px 15px rgba(0,0,0,0.1)"
+            },
+            "items": ["Electronics", "Fashion", "Home"]
+          },
+          {
+            "component": "event_cards",
+            "card_style": {
+              "background": "white",
+              "border_radius": 24,
+              "box_shadow": "0 8px 32px rgba(0,0,0,0.12)"
+            },
+            "grid_columns": 2
+          }
+        ]
+      },
+      "description": "Modern home screen with gradient banner and product cards"
+    }
+  ],
+  "styles": {
+    "colors": {
+      "primary": "#FF6B6B",
+      "secondary": "#4ECDC4",
+      "accent": "#FFE66D"
+    },
+    "typography": {
+      "display": "Poppins 800",
+      "heading": "Poppins 700",
+      "body": "Inter 500"
+    },
+    "components": [
+      "gradient_banner",
+      "filter_chips",
+      "event_cards"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Auto UI/UX Screen Builder",
+  "id": "1234567890123456789",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "This plugin needs to communicate with local development servers and various API endpoints for UI generation."
+  }
+}

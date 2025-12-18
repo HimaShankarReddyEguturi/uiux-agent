@@ -1,0 +1,417 @@
+{
+  "project_overview": {
+    "name": "UI/UX Auto-Design Generator",
+    "description": "Upload an e-commerce PDF/DOCX brief, let Groq/Gemini analyze the content, duplicate a live Figma file, and instantly draw production-ready screens through a Figma plugin.",
+    "tech_stack": ["FastAPI", "Groq LLM", "Figma API", "PyPDF2", "Python-docx"]
+  },
+  
+  "sample_pdf_content": {
+    "ecommerce": {
+      "title": "E-commerce Mobile App Design Brief",
+      "content": "Create a modern shopping application with product catalog, shopping cart, user authentication, payment integration, and order tracking. Include features like product search, filters, wishlist, reviews, and recommendations."
+    },
+    "healthcare": {
+      "title": "Healthcare Management System",
+      "content": "Design a patient portal application with appointment scheduling, medical records access, prescription management, doctor consultation, health tracking, and emergency contact features."
+    },
+    "fintech": {
+      "title": "Financial Management Platform", 
+      "content": "Build a banking application with account management, transaction history, money transfers, investment tracking, budget planning, and financial analytics dashboard."
+    },
+    "education": {
+      "title": "Learning Management System",
+      "content": "Create an educational platform with course enrollment, assignment submission, grade tracking, video lectures, discussion forums, and progress monitoring."
+    },
+    "food": {
+      "title": "Food Delivery Application",
+      "content": "Design a restaurant delivery app with menu browsing, order placement, real-time tracking, payment processing, reviews, and loyalty programs."
+    }
+  },
+
+  "expected_json_outputs": {
+    "ecommerce_response": {
+      "figma_url": "https://www.figma.com/design/RZ3gbzPzMsAsdWNfyoTErI/E-commerce-App-Design?m=auto",
+      "report": {
+        "project_name": "Shopping Store",
+        "summary": "Modern e-commerce app with shopping features",
+        "screens": [
+          {
+            "name": "Home Screen",
+            "layout": {
+              "sections": [
+                {
+                  "component": "gradient_banner",
+                  "gradient": "linear #FF6B6B → #4ECDC4",
+                  "height": 280,
+                  "title": "Shop Now",
+                  "subtitle": "Discover amazing products",
+                  "title_style": "Poppins 800 42px white",
+                  "padding": 40
+                },
+                {
+                  "component": "filter_chips",
+                  "chip_style": {
+                    "background": "rgba(255,255,255,0.15)",
+                    "selected_background": "#FF6B6B",
+                    "border_radius": 25,
+                    "box_shadow": "0 4px 15px rgba(0,0,0,0.1)"
+                  },
+                  "items": ["Electronics", "Fashion", "Home", "Sports"]
+                },
+                {
+                  "component": "section_heading",
+                  "title": "🔥 Trending Products",
+                  "background": "#FF6B6B",
+                  "text_color": "white"
+                }
+              ]
+            },
+            "description": "E-commerce home screen with products"
+          }
+        ],
+        "styles": {
+          "colors": {
+            "primary": "#FF6B6B",
+            "secondary": "#4ECDC4", 
+            "accent": "#FFE66D"
+          },
+          "typography": {
+            "display": "Poppins 800",
+            "heading": "Poppins 700",
+            "body": "Inter 500"
+          },
+          "components": ["gradient_banner", "filter_chips", "event_cards"]
+        }
+      }
+    },
+    
+    "healthcare_response": {
+      "figma_url": "https://www.figma.com/design/RZ3gbzPzMsAsdWNfyoTErI/E-commerce-App-Design?m=auto",
+      "report": {
+        "project_name": "HealthCare Portal",
+        "summary": "Modern healthcare app with patient management",
+        "screens": [
+          {
+            "name": "Patient Dashboard",
+            "layout": {
+              "sections": [
+                {
+                  "component": "gradient_banner",
+                  "gradient": "linear #48BB78 → #38B2AC",
+                  "height": 280,
+                  "title": "Welcome to HealthCare",
+                  "subtitle": "Your health, our priority",
+                  "title_style": "Poppins 800 42px white",
+                  "padding": 40
+                },
+                {
+                  "component": "filter_chips",
+                  "items": ["Appointments", "Medical Records", "Prescriptions", "Lab Results"]
+                },
+                {
+                  "component": "section_heading", 
+                  "title": "🏥 Recent Appointments",
+                  "background": "#48BB78",
+                  "text_color": "white"
+                }
+              ]
+            },
+            "description": "Healthcare dashboard with patient information"
+          }
+        ],
+        "styles": {
+          "colors": {
+            "primary": "#48BB78",
+            "secondary": "#38B2AC",
+            "accent": "#4299E1"
+          },
+          "typography": {
+            "display": "Poppins 800",
+            "heading": "Poppins 700",
+            "body": "Inter 500"
+          },
+          "components": ["gradient_banner", "section_heading", "elevated_container"]
+        }
+      }
+    },
+
+    "fintech_response": {
+      "figma_url": "https://www.figma.com/design/RZ3gbzPzMsAsdWNfyoTErI/E-commerce-App-Design?m=auto",
+      "report": {
+        "project_name": "Financial Dashboard",
+        "summary": "Secure fintech app with financial management",
+        "screens": [
+          {
+            "name": "Account Overview",
+            "layout": {
+              "sections": [
+                {
+                  "component": "gradient_banner",
+                  "gradient": "linear #2D3748 → #4299E1",
+                  "height": 280,
+                  "title": "Your Finances",
+                  "subtitle": "Manage your money smartly"
+                },
+                {
+                  "component": "filter_chips",
+                  "items": ["Accounts", "Transactions", "Investments", "Cards"]
+                },
+                {
+                  "component": "section_heading",
+                  "title": "💰 Account Balance",
+                  "background": "#2D3748"
+                }
+              ]
+            },
+            "description": "Financial dashboard with account overview"
+          }
+        ],
+        "styles": {
+          "colors": {
+            "primary": "#2D3748",
+            "secondary": "#4299E1",
+            "accent": "#48BB78"
+          }
+        }
+      }
+    }
+  },
+
+  "domain_configurations": {
+    "ecommerce": {
+      "keywords": ["shop", "shopping", "cart", "product", "store", "retail", "buy", "sell", "marketplace", "catalog"],
+      "colors": {
+        "primary": "#FF6B6B",
+        "secondary": "#4ECDC4", 
+        "accent": "#FFE66D"
+      },
+      "content": {
+        "project_name": "Shopping Store",
+        "summary": "Modern e-commerce app with shopping features",
+        "screen_name": "Home Screen",
+        "banner_title": "Shop Now",
+        "banner_subtitle": "Discover amazing products",
+        "section_title": "🔥 Trending Products",
+        "filter_items": ["Electronics", "Fashion", "Home", "Sports"]
+      }
+    },
+    "healthcare": {
+      "keywords": ["health", "medical", "doctor", "patient", "hospital", "clinic", "medicine", "healthcare"],
+      "colors": {
+        "primary": "#48BB78",
+        "secondary": "#38B2AC",
+        "accent": "#4299E1"
+      },
+      "content": {
+        "project_name": "HealthCare Portal",
+        "summary": "Modern healthcare app with patient management",
+        "screen_name": "Patient Dashboard",
+        "banner_title": "Welcome to HealthCare",
+        "banner_subtitle": "Your health, our priority",
+        "section_title": "🏥 Recent Appointments",
+        "filter_items": ["Appointments", "Medical Records", "Prescriptions", "Lab Results"]
+      }
+    },
+    "fintech": {
+      "keywords": ["finance", "financial", "bank", "banking", "investment", "trading", "wallet", "cryptocurrency", "loan"],
+      "colors": {
+        "primary": "#2D3748",
+        "secondary": "#4299E1",
+        "accent": "#48BB78"
+      },
+      "content": {
+        "project_name": "Financial Dashboard",
+        "summary": "Secure fintech app with financial management",
+        "screen_name": "Account Overview",
+        "banner_title": "Your Finances",
+        "banner_subtitle": "Manage your money smartly",
+        "section_title": "💰 Account Balance",
+        "filter_items": ["Accounts", "Transactions", "Investments", "Cards"]
+      }
+    },
+    "education": {
+      "keywords": ["education", "learning", "course", "student", "teacher", "school", "university", "academic"],
+      "colors": {
+        "primary": "#7C3AED",
+        "secondary": "#8B5CF6",
+        "accent": "#06B6D4"
+      },
+      "content": {
+        "project_name": "Learning Platform",
+        "summary": "Interactive education app with course management",
+        "screen_name": "Learning Dashboard",
+        "banner_title": "Continue Learning",
+        "banner_subtitle": "Expand your knowledge",
+        "section_title": "📚 My Courses",
+        "filter_items": ["Courses", "Assignments", "Grades", "Resources"]
+      }
+    },
+    "food": {
+      "keywords": ["food", "restaurant", "delivery", "recipe", "cooking", "meal", "dining"],
+      "colors": {
+        "primary": "#F56500",
+        "secondary": "#FF8A65",
+        "accent": "#FFD54F"
+      },
+      "content": {
+        "project_name": "Food Delivery",
+        "summary": "Food delivery app with restaurant listings",
+        "screen_name": "Restaurant List",
+        "banner_title": "Order Food",
+        "banner_subtitle": "Delicious meals delivered",
+        "section_title": "🍕 Popular Restaurants",
+        "filter_items": ["Pizza", "Burgers", "Asian", "Healthy"]
+      }
+    }
+  },
+
+  "api_endpoints": {
+    "upload": {
+      "path": "/upload",
+      "method": "POST",
+      "description": "Upload PDF and generate UI design JSON",
+      "parameters": {
+        "file": {
+          "type": "multipart/form-data",
+          "required": true,
+          "description": "PDF file containing design requirements"
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful generation",
+          "example": "See expected_json_outputs section"
+        },
+        "429": {
+          "description": "Rate limit exceeded",
+          "example": {
+            "error": "Rate limit exceeded",
+            "retry_after": 60
+          }
+        },
+        "400": {
+          "description": "Invalid file format",
+          "example": {
+            "error": "Unable to extract text from PDF"
+          }
+        }
+      }
+    }
+  },
+
+  "test_cases": [
+    {
+      "id": "TC001",
+      "name": "E-commerce PDF Upload",
+      "input": {
+        "pdf_content": "shopping cart product store retail buy sell marketplace",
+        "expected_domain": "e-commerce app"
+      },
+      "expected_output": {
+        "project_name": "Shopping Store",
+        "colors": {
+          "primary": "#FF6B6B"
+        },
+        "screen_name": "Home Screen"
+      }
+    },
+    {
+      "id": "TC002", 
+      "name": "Healthcare PDF Upload",
+      "input": {
+        "pdf_content": "doctor patient hospital medical clinic healthcare",
+        "expected_domain": "healthcare app"
+      },
+      "expected_output": {
+        "project_name": "HealthCare Portal",
+        "colors": {
+          "primary": "#48BB78"
+        },
+        "screen_name": "Patient Dashboard"
+      }
+    },
+    {
+      "id": "TC003",
+      "name": "Fintech PDF Upload", 
+      "input": {
+        "pdf_content": "finance bank investment trading wallet cryptocurrency",
+        "expected_domain": "fintech app"
+      },
+      "expected_output": {
+        "project_name": "Financial Dashboard",
+        "colors": {
+          "primary": "#2D3748"
+        },
+        "screen_name": "Account Overview"
+      }
+    }
+  ],
+
+  "environment_setup": {
+    "required_env_vars": {
+      "GROQ_API_KEY": "your_groq_api_key_here",
+      "GROQ_MODEL": "llama-3.1-8b-instant",
+      "FIGMA_ACCESS_TOKEN": "your_figma_token_here",
+      "FIGMA_TEMPLATE_FILE_KEY": "RZ3gbzPzMsAsdWNfyoTErI",
+      "FIGMA_PROJECT_ID": "501777831",
+      "LLM_PROVIDER": "groq"
+    },
+    "installation_commands": [
+      "pip install -r requirements.txt",
+      "uvicorn app.main:app --reload"
+    ]
+  },
+
+  "figma_plugin_config": {
+    "manifest": {
+      "name": "Auto UI/UX Screen Builder",
+      "id": "1234567890123456789",
+      "api": "1.0.0",
+      "main": "code.js",
+      "ui": "ui.html",
+      "editorType": ["figma"],
+      "networkAccess": {
+        "allowedDomains": ["*"],
+        "reasoning": "This plugin needs to communicate with local development servers and various API endpoints for UI generation."
+      }
+    }
+  },
+
+  "workflow_steps": [
+    {
+      "step": 1,
+      "action": "Upload PDF",
+      "description": "User uploads PDF containing design requirements"
+    },
+    {
+      "step": 2,
+      "action": "Extract Text",
+      "description": "System extracts text from PDF using PyPDF2"
+    },
+    {
+      "step": 3,
+      "action": "Detect Domain",
+      "description": "Analyze keywords to determine app type (ecommerce, healthcare, etc.)"
+    },
+    {
+      "step": 4,
+      "action": "Generate Prompt",
+      "description": "Create domain-specific prompt with appropriate colors and content"
+    },
+    {
+      "step": 5,
+      "action": "Call LLM",
+      "description": "Send prompt to Groq LLM and get JSON response"
+    },
+    {
+      "step": 6,
+      "action": "Create Figma File",
+      "description": "Duplicate template Figma file using REST API"
+    },
+    {
+      "step": 7,
+      "action": "Return Response",
+      "description": "Send JSON report and Figma URL to client"
+    }
+  ]
+}

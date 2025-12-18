@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Test for PDF to JSON API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CORS Test for PDF to JSON API</h1>
+    <p>This page tests CORS configuration for the FastAPI backend.</p>
+    
+    <button onclick="testLatestReport()">Test Latest Report Endpoint</button>
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testUpload()">Test Upload (with file)</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        function addResult(message, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = `result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+
+        async function testLatestReport() {
+            try {
+                addResult('Testing /latest-report endpoint...');
+                const response = await fetch('http://localhost:8000/latest-report', {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ Latest report: ${JSON.stringify(data)}`);
+                } else {
+                    addResult(`❌ Latest report failed: ${response.status} ${response.statusText}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Latest report error: ${error.message}`, false);
+            }
+        }
+
+        async function testHealth() {
+            try {
+                addResult('Testing /health endpoint...');
+                const response = await fetch('http://localhost:8000/health');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ Health check: ${JSON.stringify(data)}`);
+                } else {
+                    addResult(`❌ Health check failed: ${response.status}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Health check error: ${error.message}`, false);
+            }
+        }
+
+        async function testUpload() {
+            try {
+                // Create a simple test file
+                const testContent = "This is a test document for PDF to JSON conversion.";
+                const blob = new Blob([testContent], { type: 'text/plain' });
+                const formData = new FormData();
+                formData.append('file', blob, 'test.txt');
+
+                addResult('Testing /upload endpoint...');
+                const response = await fetch('http://localhost:8000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ Upload successful: Project "${data.report?.project_name}"`);
+                    addResult(`Figma URL: ${data.figma_url}`);
+                } else {
+                    addResult(`❌ Upload failed: ${response.status}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Upload error: ${error.message}`, false);
+            }
+        }
+
+        // Test on page load
+        window.addEventListener('load', () => {
+            addResult('🔍 CORS Test Page Loaded - Click buttons to test endpoints');
+        });
+    </script>
+</body>
+</html>
