@@ -8,5 +8,5 @@ python-docx==1.1.2
 PyPDF2==3.0.1
 Pillow==10.4.0
 pytesseract==0.3.13
-groq==0.5.0
+groq==0.4.2
 google-generativeai==0.7.2
